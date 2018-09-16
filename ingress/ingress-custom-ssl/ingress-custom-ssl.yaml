@@ -1,0 +1,20 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: ingress-custom-ssl
+  annotations:
+#    ingress.kubernetes.io/ssl-redirect: "true"
+    kubernetes.io/ingress.class: nginx
+spec:
+  tls:
+  - hosts:
+    - ingress.example.com
+    secretName: ingress-tls-secret
+  rules:
+  - host: ingress.example.com
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: nginx
+          servicePort: 80

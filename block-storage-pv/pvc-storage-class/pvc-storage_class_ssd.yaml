@@ -1,0 +1,39 @@
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+ name: nginx-pvc-ssd
+ annotations:
+   volume.beta.kubernetes.io/storage-class: ssd
+spec:
+ accessModes:
+   - ReadWriteOnce
+ resources:
+   requests:
+     storage: 30Gi
+
+---
+apiVersion: v1
+kind: Pod
+metadata:
+ name: nginx-test-pvc
+ labels:
+   name: nginx-test-pvc
+spec:
+ containers:
+   - resources:
+       limits :
+         cpu: 0.5
+     image: nginx
+     name: nginx
+     ports:
+       - containerPort: 80
+         name: http
+     volumeMounts:
+         # name must match the volume name below
+       - name: nginx-persistent-storage
+         # mount path within the container
+         mountPath: /val/lib/nginx/test
+ volumes:
+   - name: nginx-persistent-storage
+     persistentVolumeClaim:
+      claimName: nginx-pvc-ssd
