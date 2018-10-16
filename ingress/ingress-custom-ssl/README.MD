@@ -4,7 +4,7 @@ Ingress Controllers в Kubernetes позволяют использовать SS
 1. Получите внешний IP-адрес Ingress-контроллера этой командой
 
 ```
-kubectl get svc -n kube-system | grep ingress | grep LoadBalancer
+kubectl get svc -n ingress-nginx | grep ingress | grep LoadBalancer
 ```
 2. Заделегируйте A-запись вашего домена на внешний IP-адрес Ingress Controller
 
